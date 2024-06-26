@@ -38,6 +38,7 @@ int main(int argc, char* args[])
     std::shared_ptr<SDL_Renderer> gRenderer = nullptr;
     const int SCREEN_WIDTH = 1280;
     const int SCREEN_HEIGHT = 720;
+    const int PIXELS_PER_METER = 500;
 
     /**
      * TODO: Extend simulation
@@ -100,8 +101,8 @@ int main(int argc, char* args[])
                 if (e.type == SDL_MOUSEBUTTONDOWN)
                 {
                     SDL_GetMouseState(&x, &y);
-                    goal_state[0] = ((float)x - (float)windowSize[0] / 2) / windowSize[0];
-                    goal_state[1] = ((float)y - (float)windowSize[1] / 2) / windowSize[0];
+                    goal_state[0] = ((float)x - (float)windowSize[0] / 2) / PIXELS_PER_METER;
+                    goal_state[1] = ((float)y - (float)windowSize[1] / 2) / PIXELS_PER_METER;
                     quadrotor.SetGoal(goal_state);
                 }
 
@@ -120,7 +121,7 @@ int main(int argc, char* args[])
             SDL_RenderClear(gRenderer.get());
 
             /* Quadrotor rendering step */
-            quadrotor_visualizer.render(gRenderer);
+            quadrotor_visualizer.render(gRenderer, PIXELS_PER_METER);
 
             SDL_RenderPresent(gRenderer.get());
 
